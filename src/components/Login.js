@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { clearAuthState, login } from "../actions/auth";
 
 class Login extends Component {
   constructor(props) {
@@ -15,12 +18,20 @@ class Login extends Component {
     };
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(clearAuthState());
+  }
+
   handleFormSubmit = (e) => {
     e.preventDefault();
     // console.log("this.emailInputRef ", this.emailInputRef);
     // console.log("this.passwordInputRef ", this.passwordInputRef);
+    const { email, password } = this.state;
+    if (email && password) {
+      this.props.dispatch(login(email, password));
+    }
 
-    console.log(this.state);
+    console.log("******************");
   };
 
   handleEmailChange = (e) => {
@@ -38,9 +49,15 @@ class Login extends Component {
   };
 
   render() {
+    const { error, isProgress, isLogin } = this.props.auth;
+    // console.log("Render", isProgress);
+    if (isLogin) {
+      return <Redirect to="/" />;
+    }
     return (
       <form className="login-form">
         <span className="login-signup-header">Log In</span>
+        {error && <div className="alert error-dailog">{error}</div>}
         <div className="field">
           <input
             type="email"
@@ -62,11 +79,25 @@ class Login extends Component {
           />
         </div>
         <div className="field">
-          <button onClick={this.handleFormSubmit}>Log In</button>
+          {isProgress ? (
+            <button onClick={this.handleFormSubmit} disabled={isProgress}>
+              Logging in...
+            </button>
+          ) : (
+            <button onClick={this.handleFormSubmit} disabled={isProgress}>
+              Log In
+            </button>
+          )}
         </div>
       </form>
     );
   }
 }
 
-export default Login;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(mapStateToProps)(Login);
