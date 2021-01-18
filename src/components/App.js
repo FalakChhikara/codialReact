@@ -12,12 +12,12 @@ import jwt_decode from "jwt-decode";
 
 import { fetchPost } from "../actions/posts";
 
-import { Navbar, Home, Page404, Login, Signup } from "./";
+import { Navbar, Home, Page404, Login, Signup, Settings } from "./";
 import { authenticateUser } from "../actions/auth";
 
-const Settings = () => {
-  return <div>Setting</div>;
-};
+// const Settings = () => {
+//   return <div>Setting</div>;
+// };
 
 const PrivateRoute = (PrivateRouteProps) => {
   const { isLoggedIn, path, component: Component } = PrivateRouteProps;
@@ -26,7 +26,19 @@ const PrivateRoute = (PrivateRouteProps) => {
     <Route
       path={path}
       render={(props) => {
-        return isLoggedIn ? <Component {...props} /> : <Redirect to="/login" />;
+        return isLoggedIn ? (
+          <Component {...props} />
+        ) : (
+          // <Redirect to="/login" />
+          <Redirect
+            to={{
+              pathname: "/login/",
+              state: {
+                from: props.location, // from where it is coming // from: { pathname: "prevPath" }
+              },
+            }}
+          />
+        );
       }}
     />
   );
