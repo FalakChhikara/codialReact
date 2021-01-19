@@ -14,6 +14,8 @@ import { fetchPost } from "../actions/posts";
 
 import { Navbar, Home, Page404, Login, Signup, Settings } from "./";
 import { authenticateUser } from "../actions/auth";
+import UserProfile from "./UserProfile";
+import { fetchUserFriends } from "../actions/friends";
 
 // const Settings = () => {
 //   return <div>Setting</div>;
@@ -46,7 +48,9 @@ const PrivateRoute = (PrivateRouteProps) => {
 
 class App extends Component {
   componentDidMount() {
+    console.log("******** falak ********");
     this.props.dispatch(fetchPost());
+
     const token = localStorage.getItem("token");
     if (token) {
       try {
@@ -59,6 +63,7 @@ class App extends Component {
             name: user.name,
           })
         );
+        this.props.dispatch(fetchUserFriends());
       } catch (err) {
         console.log(err);
       }
@@ -66,8 +71,8 @@ class App extends Component {
   }
 
   render() {
-    const { posts, auth } = this.props;
-    // console.log("***Auth***", auth);
+    const { posts, auth, friends } = this.props;
+    console.log("render app", posts);
     return (
       <Router>
         <div>
@@ -91,7 +96,14 @@ class App extends Component {
               path="/"
               render={(props) => {
                 // use some logic
-                return <Home {...props} posts={posts} />;
+                return (
+                  <Home
+                    {...props}
+                    posts={posts}
+                    friends={friends}
+                    isLogin={auth.isLogin}
+                  />
+                );
               }}
             />
             {/* <Route exact path="/" component={Home} /> */}
@@ -103,6 +115,12 @@ class App extends Component {
               component={Settings}
               isLoggedIn={auth.isLogin}
             />
+            <PrivateRoute
+              exact
+              path="/users/:userId"
+              component={UserProfile}
+              isLoggedIn={auth.isLogin}
+            />
             <Route component={Page404} />
           </Switch>
         </div>
@@ -111,14 +129,15 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  posts: Proptypes.array.isRequired,
-};
+// App.propTypes = {
+//   posts: Proptypes.array.isRequired,
+// };
 
 function mapStateToProps(state) {
   return {
     posts: state.posts,
     auth: state.auth,
+    friends: state.friends,
   };
 }
 

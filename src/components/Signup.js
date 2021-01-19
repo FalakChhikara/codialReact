@@ -94,8 +94,10 @@ class Signup extends Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => ({
-  auth,
-});
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
 
 export default connect(mapStateToProps)(Signup);
