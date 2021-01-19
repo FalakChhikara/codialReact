@@ -1,5 +1,10 @@
 import { APIUrls } from "../helpers/API_urls";
-import { ADD_FRIEND, FETCH_FRIEND_SUCCESS, REMOVE_FRIEND } from "./actionTypes";
+import {
+  ADD_FRIEND,
+  FETCH_FRIEND_SUCCESS,
+  REMOVE_FRIEND,
+  UPDATE_POST_LIKE,
+} from "./actionTypes";
 
 export function fetchUserFriends(userId) {
   return (dispatch) => {

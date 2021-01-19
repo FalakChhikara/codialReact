@@ -1,4 +1,9 @@
-import { ADD_COMMENT, CREATE_POST, UPDATE_POST } from "../actions/actionTypes";
+import {
+  ADD_COMMENT,
+  CREATE_POST,
+  UPDATE_POST,
+  UPDATE_POST_LIKE,
+} from "../actions/actionTypes";
 
 export const currPostState = [];
 
@@ -19,6 +24,18 @@ export default function posts(currState = currPostState, action) {
         return post;
       });
       return newPosts;
+    case UPDATE_POST_LIKE:
+      const newPostsLikes = currState.map((post) => {
+        if (post._id === action.postId) {
+          return {
+            ...post,
+            likes: [action.userId, ...post.likes],
+          };
+        }
+        return post;
+      });
+      return newPostsLikes;
+
     default:
       return currState;
   }
