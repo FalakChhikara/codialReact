@@ -16,6 +16,7 @@ import { Navbar, Home, Page404, Login, Signup, Settings } from "./";
 import { authenticateUser } from "../actions/auth";
 import UserProfile from "./UserProfile";
 import { fetchUserFriends } from "../actions/friends";
+import UserProfile1 from "./UserProfile1";
 
 // const Settings = () => {
 //   return <div>Setting</div>;
@@ -118,9 +119,16 @@ class App extends Component {
             <PrivateRoute
               exact
               path="/users/:userId"
+              component={UserProfile1}
+              isLoggedIn={auth.isLogin}
+            />
+            <PrivateRoute
+              exact
+              path="/users/:userId"
               component={UserProfile}
               isLoggedIn={auth.isLogin}
             />
+
             <Route component={Page404} />
           </Switch>
         </div>

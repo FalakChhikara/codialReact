@@ -4,7 +4,7 @@ import {
   USER_PROFILE_SUCCESS,
 } from "../actions/actionTypes";
 
-const currProfileState = {
+export const currProfileState = {
   user: {},
   error: null,
   success: null,
