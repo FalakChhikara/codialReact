@@ -30,7 +30,7 @@ const PrivateRoute = (PrivateRouteProps) => {
       path={path}
       render={(props) => {
         return isLoggedIn ? (
-          <Component {...props} />
+          <Component {...props} />  /////////////////////////////////////////////////////////////// also done by withRouter for sending Router Props
         ) : (
           // <Redirect to="/login" />
           <Redirect
