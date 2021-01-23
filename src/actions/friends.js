@@ -7,7 +7,7 @@ import {
 } from "./actionTypes";
 
 export function fetchUserFriends(userId) {
-  return (dispatch) => {
+  return (dispatch,getstate) => {              ////////////////////////////////// important   ////////////////////////////
     const url = APIUrls.userFriends(userId);
     const token = localStorage.getItem("token");
     fetch(url, {
