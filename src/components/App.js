@@ -29,6 +29,7 @@ const PrivateRoute = (PrivateRouteProps) => {
     <Route
       path={path}
       render={(props) => {
+        console.log(props);
         return isLoggedIn ? (
           <Component {...props} />  /////////////////////////////////////////////////////////////// also done by withRouter for sending Router Props
         ) : (
@@ -122,12 +123,12 @@ class App extends Component {
               component={UserProfile1}
               isLoggedIn={auth.isLogin}
             />
-            <PrivateRoute
+            {/* <PrivateRoute
               exact
               path="/users/:userId"
               component={UserProfile}
               isLoggedIn={auth.isLogin}
-            />
+            /> */}
 
             <Route component={Page404} />
           </Switch>

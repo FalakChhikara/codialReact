@@ -76,7 +76,7 @@ class Post extends Component {
                     alt="likes-icon"
                   />
                 )}
-                <span>{post.likes.length}</span>
+                <span>{post.likes.length}pp</span>
               </button>
 
               <div className="post-comments-icon">

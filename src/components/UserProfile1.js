@@ -127,6 +127,9 @@ function UserProfile1(props) {
   const user = profile.user;
   const isFriend = checkFriend();
   const { success, error, successMessage } = state;
+  if (profile.isProgress) {
+    return <h1>Loading</h1>;
+  }
   return (
     <div className="settings">
       <div className="img-container">

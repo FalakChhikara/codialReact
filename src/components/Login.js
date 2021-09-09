@@ -49,6 +49,7 @@ class Login extends Component {
   };
 
   render() {
+    console.log("****************", this.props);
     const { error, isProgress, isLogin } = this.props.auth;
     const { from } = this.props.location.state || { from: { pathname: "/" } };
     // console.log("Render", isProgress);
